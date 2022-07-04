@@ -67,10 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
         children: _pages,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.quiz), label: "Quizz"),
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart_sharp), label: "Classement"),
-          // BottomNavigationBarItem(icon: SvgPicture.asset("assets/icons/account-cowboy-hat.svg", color: _selectedIndex == 2 ? Colors.blue : null), label: "Profil"),
           BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: "Profil"),
         ],
         currentIndex: _selectedIndex,
