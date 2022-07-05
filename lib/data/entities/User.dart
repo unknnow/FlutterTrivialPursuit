@@ -1,5 +1,5 @@
 /// id : 0
-/// scsore : 0
+/// score : 0
 /// pseudo : "Corentin"
 /// avatar : "url"
 /// games : 1
@@ -7,13 +7,13 @@
 class User {
   User({
     int? id,
-    int? scsore,
+    int? score,
     String? pseudo,
     String? avatar,
     int? games,
   }) {
     _id = id;
-    _scsore = scsore;
+    _score = score;
     _pseudo = pseudo;
     _avatar = avatar;
     _games = games;
@@ -21,21 +21,21 @@ class User {
 
   User.fromJson(dynamic json) {
     _id = json['id'];
-    _scsore = json['scsore'];
+    _score = json['score'];
     _pseudo = json['pseudo'];
     _avatar = json['avatar'];
     _games = json['games'];
   }
 
   int? _id;
-  int? _scsore;
+  int? _score;
   String? _pseudo;
   String? _avatar;
   int? _games;
 
   int? get id => _id;
 
-  int? get scsore => _scsore;
+  int? get score => _score;
 
   String? get pseudo => _pseudo;
 
@@ -46,7 +46,7 @@ class User {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;
-    map['scsore'] = _scsore;
+    map['score'] = _score;
     map['pseudo'] = _pseudo;
     map['avatar'] = _avatar;
     map['games'] = _games;

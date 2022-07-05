@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertrivialp/firebase_options.dart';
 import 'package:fluttertrivialp/ui/pages/leaderboard/leaderboard_page.dart';
 import 'package:fluttertrivialp/ui/pages/profil/profil_page.dart';
 import 'package:fluttertrivialp/ui/pages/quizz/quizz_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -59,24 +65,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_titles[_selectedIndex]),
-      ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
+      body: Center(
+        child: _pages[_selectedIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.quiz), label: "Quizz"),
-          BottomNavigationBarItem(icon: Icon(Icons.bar_chart_sharp), label: "Classement"),
-          BottomNavigationBarItem(icon: Icon(Icons.person_rounded), label: "Profil"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart_sharp), label: "Classement"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_rounded), label: "Profil"),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
       ),
-
     );
   }
 }
