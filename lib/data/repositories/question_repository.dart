@@ -18,60 +18,55 @@ class QuestionRepository {
 
   QuestionRepository._();
 
-  Future<void> insertQuestion(Results question) async {
+  Future<void> insertQuestion(Question question) async {
     return await _questionFirestore.insertQuestion(question);
   }
 
-  Future<QuerySnapshot<Results>?> getQuestions() async {
+  Future<QuerySnapshot<Question>?> getQuestions() async {
     return await _questionFirestore.getQuestions();
   }
 
   Future<void> deleteQuestion(String id) async {
-    return await _questionFirestore.deleteQuestion(id);
+    return await _questionFirestore.deleteQuestion();
   }
 
   Future<List<Results>> getFilteredQuestions() async {
     List<Results> list = await _questionApi.getQuestionOfTheDay();
 
-    Question objectToReturn = Question(
-        results: list,
-        date: _getDate()
-    );
+    Question objectToReturn = Question(results: list, date: _getDate());
 
     return list;
+  }
+
+  Future<List<Results>> getQuestionOfTheDay() async {
+    var questionsFirebase = await _questionFirestore.getQuestions();
+    var questionsData = questionsFirebase.docs.first.data();
+
+    if (questionsFirebase.size == 0) {
+      var questionsOfTheDay = await _questionApi.getQuestionOfTheDay();
+
+      Question objectToReturn = Question(results: questionsOfTheDay, date: _getDate());
+
+      _questionFirestore.insertQuestion(objectToReturn);
+      return questionsOfTheDay;
+    }
+
+    if (questionsData.date == _getDate()) {
+      return questionsData.results!;
+    } else {
+      _questionFirestore.deleteQuestion();
+
+      var questionsOfTheDay = await _questionApi.getQuestionOfTheDay();
+
+      Question objectToReturn = Question(results: questionsOfTheDay, date: _getDate());
+
+      _questionFirestore.insertQuestion(objectToReturn);
+      return questionsOfTheDay;
+    }
   }
 
   String _getDate() {
     DateTime today = DateTime.now();
     return '${today.day}/${today.month}/${today.year}';
-  }
-
-  Future<List<Results>> getQuestionOfTheDay() async {
-    List<Results> list =  (await _questionFirestore.getQuestions()) as List<Results>;
-
-    Question objectToReturn = Question(
-      results: list,
-      date: _getDate()
-    );
-
-    if(objectToReturn.date == _getDate()) {
-      return objectToReturn.results!;
-    } else {
-      List<Results> questions = await getFilteredQuestions();
-      Question objectToReturn = Question(
-          results: questions,
-          date: _getDate()
-      );
-
-      // delete doc firestore
-      // _questionFirestore.deleteQuestion();
-
-      // put ObjecToReturn à firestore
-      // objectToReturn.results?.forEach((element) {
-      //   _questionFirestore.insertQuestion(element);
-      // });
-      
-      return questions;
-    }
   }
 }

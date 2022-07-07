@@ -16,7 +16,7 @@ class Question {
 
   Question.fromJson(dynamic json) {
     _responseCode = json['response_code'];
-    _date = json['date'];
+    // _date = json['date'];
     if (json['results'] != null) {
       _results = [];
       json['results'].forEach((v) {

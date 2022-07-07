@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertrivialp/firebase_options.dart';
+import 'package:fluttertrivialp/ui/pages/game/game_page.dart';
 import 'package:fluttertrivialp/ui/pages/leaderboard/leaderboard_page.dart';
 import 'package:fluttertrivialp/ui/pages/profil/profil_page.dart';
 import 'package:fluttertrivialp/ui/pages/quizz/quizz_page.dart';
@@ -51,7 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = <Widget>[
-    QuizzPage(),
+    // QuizzPage(),
+    GamePage(),
     LeaderboardPage(),
     // ProfilPage(),
     // SignUpPage(),

@@ -73,6 +73,7 @@ flutter:
    - assets/icons/account-cowboy-hat.svg
    - assets/icons/medal.svg
    - assets/icons/medal-outline.svg
+   - assets/images/backgroundApp.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

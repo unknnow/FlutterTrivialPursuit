@@ -40,23 +40,6 @@ class Results {
   String? _correctAnswer;
   List<String>? _incorrectAnswers;
 
-  Results copyWith({
-    String? category,
-    String? type,
-    String? difficulty,
-    String? question,
-    String? correctAnswer,
-    List<String>? incorrectAnswers,
-  }) =>
-      Results(
-        category: category ?? _category,
-        type: type ?? _type,
-        difficulty: difficulty ?? _difficulty,
-        question: question ?? _question,
-        correctAnswer: correctAnswer ?? _correctAnswer,
-        incorrectAnswers: incorrectAnswers ?? _incorrectAnswers,
-      );
-
   String? get category => _category;
 
   String? get type => _type;

@@ -21,7 +21,9 @@ class QuestionApi {
 
     final response = await http.get(uri);
     if (response.statusCode == 200) {
-      Question questionApiResponse = Question.fromJson(jsonDecode(response.body));
+      Question questionApiResponse =
+          Question.fromJson(jsonDecode(response.body));
+
       return questionApiResponse.results!;
     } else {
       throw Exception("Failed to load words");
