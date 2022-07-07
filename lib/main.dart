@@ -5,6 +5,8 @@ import 'package:fluttertrivialp/ui/pages/leaderboard/leaderboard_page.dart';
 import 'package:fluttertrivialp/ui/pages/profil/profil_page.dart';
 import 'package:fluttertrivialp/ui/pages/quizz/quizz_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertrivialp/ui/pages/signIn/signin_page.dart';
+import 'package:fluttertrivialp/ui/pages/signUp/signup_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,12 +50,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  final List<String> _titles = ['Quizz', 'Classement', 'Profil'];
-
   static const List<Widget> _pages = <Widget>[
     QuizzPage(),
     LeaderboardPage(),
-    ProfilPage(),
+    // ProfilPage(),
+    // SignUpPage(),
+    SignInPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -75,6 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.bar_chart_sharp), label: "Classement"),
           BottomNavigationBarItem(
               icon: Icon(Icons.person_rounded), label: "Profil"),
+          // BottomNavigationBarItem(
+          //     icon: Icon(Icons.login), label: "SignUp"),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.blue,

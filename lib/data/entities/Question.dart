@@ -5,14 +5,18 @@ import 'Results.dart';
 
 class Question {
   Question({
-      int? responseCode, 
-      List<Results>? results,}){
+    int? responseCode,
+    required String date,
+    List<Results>? results,
+  }) {
     _responseCode = responseCode;
+    _date = date;
     _results = results;
-}
+  }
 
   Question.fromJson(dynamic json) {
     _responseCode = json['response_code'];
+    _date = json['date'];
     if (json['results'] != null) {
       _results = [];
       json['results'].forEach((v) {
@@ -20,23 +24,24 @@ class Question {
       });
     }
   }
+
   int? _responseCode;
+  String _date = DateTime.now().toString();
   List<Results>? _results;
-Question copyWith({  int? responseCode,
-  List<Results>? results,
-}) => Question(  responseCode: responseCode ?? _responseCode,
-  results: results ?? _results,
-);
+
   int? get responseCode => _responseCode;
+
+  String get date => _date;
+
   List<Results>? get results => _results;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['response_code'] = _responseCode;
+    map['date'] = _date;
     if (_results != null) {
       map['results'] = _results?.map((v) => v.toJson()).toList();
     }
     return map;
   }
-
 }

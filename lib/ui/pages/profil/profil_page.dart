@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertrivialp/data/entities/User.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,7 +12,7 @@ class ProfilPage extends StatefulWidget {
 
 class _ProfilPageState extends State<ProfilPage> {
   bool allowEdit = false;
-  User user = User.fromJson({
+  TriviaUser user = TriviaUser.fromJson({
     'id': 1,
     'score': 999,
     'pseudo': 'Corentin',
@@ -76,7 +75,7 @@ class _ProfilPageState extends State<ProfilPage> {
                           }
                         });
                       },
-                      child: const SizedBox(
+                      child:const SizedBox(
                           height: 150,
                           width: 150,
                           child: CircleAvatar(
@@ -111,5 +110,11 @@ class _ProfilPageState extends State<ProfilPage> {
         ),
       ),
     );
+  }
+
+  Image? getImagePath(File file) {
+    if (file != null) {
+      return Image.asset(file.path);
+    }
   }
 }

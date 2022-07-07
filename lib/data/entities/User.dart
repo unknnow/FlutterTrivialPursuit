@@ -4,8 +4,8 @@
 /// avatar : "url"
 /// games : 1
 
-class User {
-  User({
+class TriviaUser {
+  TriviaUser({
     int? id,
     int? score,
     String? pseudo,
@@ -19,7 +19,7 @@ class User {
     _games = games;
   }
 
-  User.fromJson(dynamic json) {
+  TriviaUser.fromJson(dynamic json) {
     _id = json['id'];
     _score = json['score'];
     _pseudo = json['pseudo'];
