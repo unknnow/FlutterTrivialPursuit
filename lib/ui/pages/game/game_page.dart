@@ -19,6 +19,8 @@ class _GameState extends State<GamePage> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Quizz"),
+          centerTitle: true,
+          backgroundColor: Colors.blue.withOpacity(0.75),
         ),
         body: MultiRepositoryProvider(
           providers: [

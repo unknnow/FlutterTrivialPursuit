@@ -6,8 +6,8 @@
 
 class TriviaUser {
   TriviaUser({
-    int? id,
-    int? score,
+    String? id,
+    int score = 0,
     String? pseudo,
     String? avatar,
     int? games,
@@ -20,22 +20,22 @@ class TriviaUser {
   }
 
   TriviaUser.fromJson(dynamic json) {
-    _id = json['id'];
+    _id = json['id'].toString();
     _score = json['score'];
     _pseudo = json['pseudo'];
     _avatar = json['avatar'];
     _games = json['games'];
   }
 
-  int? _id;
-  int? _score;
+  String? _id;
+  int _score = 0;
   String? _pseudo;
   String? _avatar;
   int? _games;
 
-  int? get id => _id;
+  String? get id => _id;
 
-  int? get score => _score;
+  int get score => _score;
 
   String? get pseudo => _pseudo;
 

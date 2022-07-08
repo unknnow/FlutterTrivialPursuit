@@ -125,7 +125,7 @@ class _SignUpState extends State<SignUpPage> {
   }
 
   Widget _displayAvatar() => _userAvatar.path == ""
-      ? const Icon(Icons.ac_unit)
+      ? const SizedBox(width: 200, height: 200, child: CircleAvatar(child: Text("AVATAR"), backgroundColor: Colors.blue))
       : SizedBox(
           width: 200,
           height: 200,

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertrivialp/data/dataSources/remote/user_firebase.dart';
 import 'package:fluttertrivialp/data/entities/User.dart';
@@ -17,6 +20,20 @@ class UserRepository {
   Future<TriviaUser?> getUserById(String id) async {
     TriviaUser? user = await _userFirestore.getUserById(id);
     return user;
+  }
+
+  Future<List<TriviaUser>> getAllUsers() async {
+    var usersFirebase = await _userFirestore.getAll();
+
+    List<TriviaUser> listUsers = <TriviaUser>[];
+    for (var element in usersFirebase.docs) {
+      listUsers.add(element.data());
+    }
+    listUsers.sort((a, b){
+      return b.score.compareTo(a.score);
+    });
+
+    return listUsers;
   }
 
   Future<void> createUser(TriviaUser user) async {

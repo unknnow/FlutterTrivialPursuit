@@ -27,18 +27,15 @@ class _ProfilPageState extends State<ProfilPage> {
   );
 
   TextEditingController pseudoController = TextEditingController();
-  TextEditingController avatarController = TextEditingController();
-  XFile? _userAvatar;
+  File _userAvatar = File("");
 
   _ProfilPageState() {
     pseudoController.text = user.pseudo.toString();
-    avatarController.text = user.avatar.toString();
   }
 
   void saveForm() {
     setState(() {
       print(pseudoController.text);
-      print(avatarController.text);
     });
   }
 
@@ -49,6 +46,8 @@ class _ProfilPageState extends State<ProfilPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Profil"),
+        centerTitle: true,
+        backgroundColor: Colors.blue.withOpacity(0.75),
         actions: [
           IconButton(
               onPressed: () {
@@ -71,19 +70,11 @@ class _ProfilPageState extends State<ProfilPage> {
                             source: ImageSource.gallery);
                         setState(() {
                           if (image != null) {
-                            _userAvatar = image;
+                            _userAvatar = File(image.path);
                           }
                         });
                       },
-                      child:const SizedBox(
-                          height: 150,
-                          width: 150,
-                          child: CircleAvatar(
-                            backgroundImage: null,
-                          )
-                      )
-                  )
-              ),
+                      child: _displayAvatar())),
               Text("Score : ${user.score}", style: textStyle),
               Text("Games : ${user.games}", style: textStyle),
               TextField(
@@ -91,12 +82,6 @@ class _ProfilPageState extends State<ProfilPage> {
                 controller: pseudoController,
                 decoration: const InputDecoration(
                     border: UnderlineInputBorder(), labelText: "Pseudo"),
-              ),
-              TextField(
-                enabled: allowEdit,
-                controller: avatarController,
-                decoration: const InputDecoration(
-                    border: UnderlineInputBorder(), labelText: "Avatar"),
               ),
               Visibility(
                 visible: allowEdit,
@@ -112,9 +97,13 @@ class _ProfilPageState extends State<ProfilPage> {
     );
   }
 
-  Image? getImagePath(File file) {
-    if (file != null) {
-      return Image.asset(file.path);
-    }
-  }
+  Widget _displayAvatar() => _userAvatar.path == ""
+      ? const SizedBox(width: 200, height: 200, child: CircleAvatar(child: Text("AVATAR"), backgroundColor: Colors.blue))
+      : SizedBox(
+          width: 200,
+          height: 200,
+          child: CircleAvatar(
+            backgroundImage: FileImage(_userAvatar),
+          ),
+        );
 }
