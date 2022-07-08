@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:360430963641:ios:676462b00cbf30da7a4468",
-  "FIREBASE_PROJECT_ID": "flutter-trivia-b0463",
-  "GCM_SENDER_ID": "360430963641"
+  "GOOGLE_APP_ID": "1:366530576565:ios:b069c11901d39062ddbefc",
+  "FIREBASE_PROJECT_ID": "fluttertrivial",
+  "GCM_SENDER_ID": "366530576565"
 }

@@ -50,47 +50,61 @@ class _ProfilPageState extends State<ProfilPage> {
         backgroundColor: Colors.blue.withOpacity(0.75),
         actions: [
           IconButton(
-              onPressed: () {
-                setState(() {
+              onPressed: () {                setState(() {
                   allowEdit = !allowEdit;
                 });
               },
               icon: const Icon(Icons.edit, color: Colors.white))
         ],
       ),
-      body: Center(
-        child: Form(
-          child: Column(
-            children: [
-              Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: InkWell(
-                      onTap: () async {
-                        XFile? image = await _picker.pickImage(
-                            source: ImageSource.gallery);
-                        setState(() {
-                          if (image != null) {
-                            _userAvatar = File(image.path);
-                          }
-                        });
-                      },
-                      child: _displayAvatar())),
-              Text("Score : ${user.score}", style: textStyle),
-              Text("Games : ${user.games}", style: textStyle),
-              TextField(
-                enabled: allowEdit,
-                controller: pseudoController,
-                decoration: const InputDecoration(
-                    border: UnderlineInputBorder(), labelText: "Pseudo"),
-              ),
-              Visibility(
-                visible: allowEdit,
-                child: TextButton(
-                  onPressed: saveForm,
-                  child: const Text('Sauvegarder'),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/backgroundApp.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Form(
+            child: Column(
+              children: [
+                Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: InkWell(
+                        onTap: () async {
+                          XFile? image = await _picker.pickImage(
+                              source: ImageSource.gallery);
+                          setState(() {
+                            if (image != null) {
+                              _userAvatar = File(image.path);
+                            }
+                          });
+                        },
+                        child: _displayAvatar())),
+                Card(
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Text("Score : ${user.score}", style: textStyle),
+                      Text("Games : ${user.games}", style: textStyle),
+                      TextField(
+                        enabled: allowEdit,
+                        controller: pseudoController,
+                        decoration: const InputDecoration(
+                            border: UnderlineInputBorder(), labelText: "Pseudo"),
+                      ),
+                      Visibility(
+                        visible: allowEdit,
+                        child: TextButton(
+                          onPressed: saveForm,
+                          child: const Text('Sauvegarder'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -98,10 +112,10 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 
   Widget _displayAvatar() => _userAvatar.path == ""
-      ? const SizedBox(width: 200, height: 200, child: CircleAvatar(child: Text("AVATAR"), backgroundColor: Colors.blue))
+      ? const SizedBox(width: 150, height: 150, child: CircleAvatar(child: Text("AVATAR"), backgroundColor: Colors.blue))
       : SizedBox(
-          width: 200,
-          height: 200,
+          width: 150,
+          height: 150,
           child: CircleAvatar(
             backgroundImage: FileImage(_userAvatar),
           ),

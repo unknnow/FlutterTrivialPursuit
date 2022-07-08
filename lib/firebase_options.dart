@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCcgMZt7-t3Z3WRdAnXhWvSdplWncUQ110',
-    appId: '1:360430963641:android:6f24214c7dd7ef9b7a4468',
-    messagingSenderId: '360430963641',
-    projectId: 'flutter-trivia-b0463',
-    storageBucket: 'flutter-trivia-b0463.appspot.com',
+    apiKey: 'AIzaSyDpG_BT18JCmVK0-mal4-d771PzbySh49I',
+    appId: '1:366530576565:android:59e92ab81dad8090ddbefc',
+    messagingSenderId: '366530576565',
+    projectId: 'fluttertrivial',
+    storageBucket: 'fluttertrivial.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC1yRkCZqdyY-gloAP8R0ih6F2etwvrjM0',
-    appId: '1:360430963641:ios:676462b00cbf30da7a4468',
-    messagingSenderId: '360430963641',
-    projectId: 'flutter-trivia-b0463',
-    storageBucket: 'flutter-trivia-b0463.appspot.com',
-    iosClientId: '360430963641-otdrv2evdqul5oo4bcrn8j7v866o2p5s.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAP8uCnnFpBnjkNy1Fvfszfasy_-dF4SMs',
+    appId: '1:366530576565:ios:b069c11901d39062ddbefc',
+    messagingSenderId: '366530576565',
+    projectId: 'fluttertrivial',
+    storageBucket: 'fluttertrivial.appspot.com',
+    iosClientId: '366530576565-k96jnsk3l5rus1gsfpqmo1g6nj12n0sj.apps.googleusercontent.com',
     iosBundleId: 'com.cbrunelle.fluttertrivialp',
   );
 }

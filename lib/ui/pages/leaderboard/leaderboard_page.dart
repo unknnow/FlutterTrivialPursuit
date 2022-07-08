@@ -96,7 +96,23 @@ class _LeaderboardState extends State<LeaderboardPage> {
                     ),
                   );
                 } else {
-                  return Text("Error UI");
+                  return Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/backgroundApp.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: const Center(
+                      child: Card(
+                        color: Colors.white,
+                        child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: Text("Classement indisponible"),
+                        ),
+                      ),
+                    )
+                  );
                 }
               },
             ),
