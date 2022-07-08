@@ -5,8 +5,8 @@ import 'package:fluttertrivialp/ui/pages/game/game_page.dart';
 import 'package:fluttertrivialp/ui/pages/leaderboard/leaderboard_page.dart';
 import 'package:fluttertrivialp/ui/pages/profil/profil_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fluttertrivialp/ui/pages/game/game_page.dart';
-import 'package:fluttertrivialp/ui/pages/leaderboard/leaderboard_page.dart';
+import 'package:fluttertrivialp/ui/pages/signIn/signin_page.dart';
+import 'package:fluttertrivialp/ui/pages/signUp/signup_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,10 +22,10 @@ class MyApp extends StatelessWidget {
   final routerDelegate = BeamerDelegate(
       locationBuilder: RoutesLocationBuilder(
         routes: {
-          // '/': (context, state, data) => SignInPage(),
-          // '/login': (context, state, data) => SignUpPage(),
-          // '/home': (context, state, data) => MyHomePage(title: ('Welcome'))
-          '/': (context, state, data) => MyHomePage(title: ('Welcome'))
+          '/': (context, state, data) => SignInPage(),
+          '/login': (context, state, data) => SignUpPage(),
+          '/home': (context, state, data) => MyHomePage(title: ('Welcome'))
+          // '/': (context, state, data) => MyHomePage(title: ('Welcome'))
         }
       )
   );
@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   static const List<Widget> _pages = <Widget>[
-    GamePage(),
+    GamesPage(),
     LeaderboardPage(),
     ProfilPage(),
   ];

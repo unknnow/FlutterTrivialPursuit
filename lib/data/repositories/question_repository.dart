@@ -38,30 +38,42 @@ class QuestionRepository {
     return list;
   }
 
-  Future<List<Results>> getQuestionOfTheDay() async {
-    var questionsFirebase = await _questionFirestore.getQuestions();
-    var questionsData = questionsFirebase.docs.first.data();
+  Future<List<Results>?> getQuestionOfTheDay() async {
 
-    if (questionsFirebase.size == 0) {
+    var questionsFromFirestore = await _questionFirestore.getQuestions();
+
+    if(questionsFromFirestore.size == 0) {
+      print("ici");
       var questionsOfTheDay = await _questionApi.getQuestionOfTheDay();
 
-      Question objectToReturn = Question(results: questionsOfTheDay, date: _getDate());
+      Question objectToReturn = Question(
+          results: questionsOfTheDay,
+          date: _getDate()
+      );
 
       _questionFirestore.insertQuestion(objectToReturn);
-      return questionsOfTheDay;
-    }
 
-    if (questionsData.date == _getDate()) {
-      return questionsData.results!;
+      return questionsOfTheDay;
     } else {
-      _questionFirestore.deleteQuestion();
+      var questionsData = questionsFromFirestore.docs.first.data();
+      DateTime newDate = DateTime.parse(questionsData.date);
 
-      var questionsOfTheDay = await _questionApi.getQuestionOfTheDay();
+      if(newDate.day == DateTime.now().day && newDate.month == DateTime.now().month  && newDate.year == DateTime.now().year) {
+        return questionsData.results;
+      } else {
+        _questionFirestore.deleteQuestion();
 
-      Question objectToReturn = Question(results: questionsOfTheDay, date: _getDate());
+        var questionsOfTheDay = await _questionApi.getQuestionOfTheDay();
 
-      _questionFirestore.insertQuestion(objectToReturn);
-      return questionsOfTheDay;
+        Question objectToReturn = Question(
+            results: questionsOfTheDay,
+            date: _getDate()
+        );
+
+        _questionFirestore.insertQuestion(objectToReturn);
+
+        return questionsOfTheDay;
+      }
     }
   }
 

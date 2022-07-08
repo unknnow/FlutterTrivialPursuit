@@ -4,8 +4,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'game_state.freezed.dart';
 
 @freezed
-class GameState with _$GameState {
-  const factory GameState.loading() = QuestionLoading;
-  const factory GameState.saved(List<Results> list) = QuestionLoaded;
-  const factory GameState.error(String message) = QuestionError;
+class GamesState with _$GamesState {
+  const factory GamesState.loading() = Loading;
+  const factory GamesState.saved(List<Results> liste) = Saved;
+  const factory GamesState.error(String message) = Error;
+  const factory GamesState.answerSelected(String selectedAnswer, int indexQuestion) = AnswerSelected;
+  const factory GamesState.wrongAnswer(bool isWrong, String? goodAnswer, int score, bool isFinish) = WrongAnswer;
+  const factory GamesState.gameFinish(int score) = GameFinish;
 }
