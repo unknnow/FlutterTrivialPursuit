@@ -1,4 +1,5 @@
 import 'package:beamer/beamer.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertrivialp/firebase_options.dart';
 import 'package:fluttertrivialp/ui/pages/game/game_page.dart';
@@ -20,15 +21,12 @@ class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
   final routerDelegate = BeamerDelegate(
-      locationBuilder: RoutesLocationBuilder(
-        routes: {
-          '/': (context, state, data) => SignInPage(),
-          '/login': (context, state, data) => SignUpPage(),
-          '/home': (context, state, data) => MyHomePage(title: ('Welcome'))
-          // '/': (context, state, data) => MyHomePage(title: ('Welcome'))
-        }
-      )
-  );
+      locationBuilder: RoutesLocationBuilder(routes: {
+    '/': (context, state, data) => SignInPage(),
+    '/login': (context, state, data) => SignUpPage(),
+    '/home': (context, state, data) => MyHomePage(title: ('Welcome'))
+    // '/': (context, state, data) => MyHomePage(title: ('Welcome'))
+  }));
 
   // This widget is the root of your application.
   @override
@@ -47,7 +45,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routeInformationParser: BeamerParser(),
       routerDelegate: routerDelegate,
-      backButtonDispatcher: BeamerBackButtonDispatcher(delegate: routerDelegate),
+      backButtonDispatcher:
+          BeamerBackButtonDispatcher(delegate: routerDelegate),
     );
   }
 }
@@ -76,24 +75,24 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  int _page = 0;
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: _pages[_selectedIndex],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.quiz), label: "Quizz"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart_sharp), label: "Classement"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_rounded), label: "Profil"),
-          // BottomNavigationBarItem(
-          //     icon: Icon(Icons.login), label: "SignUp"),
+      bottomNavigationBar: CurvedNavigationBar(
+        key: _bottomNavigationKey,
+        backgroundColor: Colors.deepPurple,
+        items: const <Widget>[
+          Icon(Icons.quiz, size: 30),
+          Icon(Icons.bar_chart_sharp, size: 30),
+          Icon(Icons.person_rounded, size: 30),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        index: _selectedIndex,
         onTap: _onItemTapped,
       ),
     );
