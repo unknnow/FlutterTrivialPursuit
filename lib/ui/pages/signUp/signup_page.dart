@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertrivialp/data/entities/User.dart';
@@ -5,6 +7,7 @@ import 'package:fluttertrivialp/data/repositories/auth_repository.dart';
 import 'package:fluttertrivialp/data/repositories/user_repository.dart';
 import 'package:fluttertrivialp/ui/pages/signUp/signup_cubit.dart';
 import 'package:fluttertrivialp/ui/pages/signUp/signup_state.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -18,6 +21,10 @@ class _SignUpState extends State<SignUpPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  final ImagePicker _picker = ImagePicker();
+  File _userAvatar = File("");
+  XFile _userAvatarUpload = XFile("");
+
   SignUpCubit? cubit;
 
   void saveForm() {
@@ -28,8 +35,9 @@ class _SignUpState extends State<SignUpPage> {
           'pseudo': pseudoController.text,
           'games': 1,
           'score': 1,
-          'avatar': "",
-        }));
+          'avatar': _userAvatar.path,
+        }),
+        _userAvatarUpload);
   }
 
   @override
@@ -67,6 +75,20 @@ class _SignUpState extends State<SignUpPage> {
                     child: Form(
                       child: Column(
                         children: [
+                          Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: InkWell(
+                                  onTap: () async {
+                                    XFile? image = await _picker.pickImage(
+                                        source: ImageSource.gallery);
+                                    setState(() {
+                                      if (image != null) {
+                                        _userAvatar = File(image.path);
+                                        _userAvatarUpload = image;
+                                      }
+                                    });
+                                  },
+                                  child: _displayAvatar())),
                           TextField(
                             controller: pseudoController,
                             decoration: const InputDecoration(
@@ -101,4 +123,14 @@ class _SignUpState extends State<SignUpPage> {
           ),
         ));
   }
+
+  Widget _displayAvatar() => _userAvatar.path == ""
+      ? const Icon(Icons.ac_unit)
+      : SizedBox(
+          width: 200,
+          height: 200,
+          child: CircleAvatar(
+            backgroundImage: FileImage(_userAvatar),
+          ),
+        );
 }

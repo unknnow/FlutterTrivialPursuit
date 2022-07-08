@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertrivialp/data/entities/User.dart';
@@ -21,6 +22,7 @@ class _SignInState extends State<SignInPage> {
 
   void saveForm() {
     cubit?.signInUser(emailController.text, passwordController.text);
+    context.beamToNamed('home');
   }
 
   @override

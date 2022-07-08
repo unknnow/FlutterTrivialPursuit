@@ -28,7 +28,7 @@ class _ProfilPageState extends State<ProfilPage> {
 
   TextEditingController pseudoController = TextEditingController();
   TextEditingController avatarController = TextEditingController();
-  File _userAvatar = File("");
+  XFile? _userAvatar;
 
   _ProfilPageState() {
     pseudoController.text = user.pseudo.toString();
@@ -56,7 +56,7 @@ class _ProfilPageState extends State<ProfilPage> {
                   allowEdit = !allowEdit;
                 });
               },
-              icon: const Icon(Icons.edit, color: Colors.lightGreenAccent))
+              icon: const Icon(Icons.edit, color: Colors.white))
         ],
       ),
       body: Center(
@@ -71,7 +71,7 @@ class _ProfilPageState extends State<ProfilPage> {
                             source: ImageSource.gallery);
                         setState(() {
                           if (image != null) {
-                            _userAvatar = File(image.path);
+                            _userAvatar = image;
                           }
                         });
                       },

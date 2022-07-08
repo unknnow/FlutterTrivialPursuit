@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertrivialp/firebase_options.dart';
@@ -14,16 +15,26 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  final routerDelegate = BeamerDelegate(
+      locationBuilder: RoutesLocationBuilder(
+        routes: {
+          '/': (context, state, data) => SignInPage(),
+          '/login': (context, state, data) => SignUpPage(),
+          '/home': (context, state, data) => MyHomePage(title: ('Welcome'))
+        }
+      )
+  );
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -33,8 +44,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         backgroundColor: Colors.black,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
       debugShowCheckedModeBanner: false,
+      routeInformationParser: BeamerParser(),
+      routerDelegate: routerDelegate,
+      backButtonDispatcher: BeamerBackButtonDispatcher(delegate: routerDelegate),
     );
   }
 }
@@ -56,8 +70,8 @@ class _MyHomePageState extends State<MyHomePage> {
     GamePage(),
     LeaderboardPage(),
     // ProfilPage(),
-    // SignUpPage(),
-    SignInPage(),
+    SignUpPage(),
+    // SignInPage(),
   ];
 
   void _onItemTapped(int index) {
