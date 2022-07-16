@@ -3,7 +3,7 @@ import 'package:fluttertrivialp/data/repositories/auth_repository.dart';
 import 'package:fluttertrivialp/data/repositories/question_repository.dart';
 import 'package:fluttertrivialp/data/repositories/user_repository.dart';
 import 'package:fluttertrivialp/ui/pages/game/bloc/game_state.dart';
-import 'package:fluttertrivialp/data/entities/Results.dart';
+import 'package:fluttertrivialp/data/entities/Questions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameCubit extends Cubit<GamesState> {
@@ -11,9 +11,9 @@ class GameCubit extends Cubit<GamesState> {
   final UserRepository userRepository;
   final AuthRepository authRepository;
 
-  late Results _lastQuestion;
+  late Question _lastQuestion;
 
-  List<Results>? listResults;
+  List<Question>? listResults;
 
   int score = 0;
   String selectedAnswer = '';

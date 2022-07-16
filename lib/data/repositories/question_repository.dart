@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertrivialp/data/dataSources/remote/question_api.dart';
 import 'package:fluttertrivialp/data/dataSources/remote/question_firebase.dart';
 import 'package:fluttertrivialp/data/dataSources/remote/user_firebase.dart';
-import 'package:fluttertrivialp/data/entities/Question.dart';
 import 'package:fluttertrivialp/data/entities/Results.dart';
+import 'package:fluttertrivialp/data/entities/Questions.dart';
 
 class QuestionRepository {
   static QuestionRepository? _instance;
@@ -18,11 +18,11 @@ class QuestionRepository {
 
   QuestionRepository._();
 
-  Future<void> insertQuestion(Question question) async {
+  Future<void> insertQuestion(Results question) async {
     return await _questionFirestore.insertQuestion(question);
   }
 
-  Future<QuerySnapshot<Question>?> getQuestions() async {
+  Future<QuerySnapshot<Results>?> getQuestions() async {
     return await _questionFirestore.getQuestions();
   }
 
@@ -30,15 +30,15 @@ class QuestionRepository {
     return await _questionFirestore.deleteQuestion();
   }
 
-  Future<List<Results>> getFilteredQuestions() async {
-    List<Results> list = await _questionApi.getQuestionOfTheDay();
+  Future<List<Question>> getFilteredQuestions() async {
+    List<Question> list = await _questionApi.getQuestionOfTheDay();
 
-    Question objectToReturn = Question(results: list, date: _getDate());
+    Results objectToReturn = Results(results: list, date: _getDate());
 
     return list;
   }
 
-  Future<List<Results>?> getQuestionOfTheDay() async {
+  Future<List<Question>?> getQuestionOfTheDay() async {
 
     var questionsFromFirestore = await _questionFirestore.getQuestions();
 
@@ -46,7 +46,7 @@ class QuestionRepository {
       print("ici");
       var questionsOfTheDay = await _questionApi.getQuestionOfTheDay();
 
-      Question objectToReturn = Question(
+      Results objectToReturn = Results(
           results: questionsOfTheDay,
           date: _getDate()
       );
@@ -65,7 +65,7 @@ class QuestionRepository {
 
         var questionsOfTheDay = await _questionApi.getQuestionOfTheDay();
 
-        Question objectToReturn = Question(
+        Results objectToReturn = Results(
             results: questionsOfTheDay,
             date: _getDate()
         );

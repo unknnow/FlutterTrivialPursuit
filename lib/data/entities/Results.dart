@@ -1,65 +1,47 @@
-/// category : "Science & Nature"
-/// type : "boolean"
-/// difficulty : "medium"
-/// question : "Like with the Neanderthals, Homo sapiens sapiens also interbred with the Denisovans."
-/// correct_answer : "True"
-/// incorrect_answers : ["False"]
+import 'Questions.dart';
+
+/// response_code : 0
+/// results : [{"category":"Science & Nature","type":"boolean","difficulty":"medium","question":"Like with the Neanderthals, Homo sapiens sapiens also interbred with the Denisovans.","correct_answer":"True","incorrect_answers":["False"]},{"category":"Entertainment: Japanese Anime & Manga","type":"multiple","difficulty":"easy","question":"The name of Junko Enoshima&#039;s imposter at the beginning of Danganronpa: Trigger Happy Havoc is?","correct_answer":"Mukuro Ikusaba","incorrect_answers":["Ryota Mitarai","Ultimate Imposter","Komaru Naegi"]},{"category":"Entertainment: Film","type":"boolean","difficulty":"easy","question":"In the original Star Wars trilogy, Alec Guinness provided the voice for Darth Vader.","correct_answer":"False","incorrect_answers":["True"]},{"category":"Sports","type":"multiple","difficulty":"hard","question":"Which city features all of their professional sports teams&#039; jersey&#039;s with the same color scheme?","correct_answer":"Pittsburgh","incorrect_answers":["New York","Seattle","Tampa Bay"]},{"category":"Entertainment: Video Games","type":"multiple","difficulty":"easy","question":"In the video game &quot;Postal 2&quot;, what is the name of Postal Dude&#039;s dog?","correct_answer":"Champ","incorrect_answers":["Snoopy","Krotchy","Duke"]}]
 
 class Results {
   Results({
-    String? category,
-    String? type,
-    String? difficulty,
-    String? question,
-    String? correctAnswer,
-    List<String>? incorrectAnswers,
+    int? responseCode,
+    required String date,
+    List<Question>? results,
   }) {
-    _category = category;
-    _type = type;
-    _difficulty = difficulty;
-    _question = question;
-    _correctAnswer = correctAnswer;
-    _incorrectAnswers = incorrectAnswers;
+    _responseCode = responseCode;
+    _date = date;
+    _results = results;
   }
 
   Results.fromJson(dynamic json) {
-    _category = json['category'];
-    _type = json['type'];
-    _difficulty = json['difficulty'];
-    _question = json['question'];
-    _correctAnswer = json['correct_answer'];
-    _incorrectAnswers = json['incorrect_answers'] != null
-        ? json['incorrect_answers'].cast<String>()
-        : [];
+    _responseCode = json['response_code'];
+    // _date = json['date'];
+    if (json['results'] != null) {
+      _results = [];
+      json['results'].forEach((v) {
+        _results?.add(Question.fromJson(v));
+      });
+    }
   }
 
-  String? _category;
-  String? _type;
-  String? _difficulty;
-  String? _question;
-  String? _correctAnswer;
-  List<String>? _incorrectAnswers;
+  int? _responseCode;
+  String _date = DateTime.now().toString();
+  List<Question>? _results;
 
-  String? get category => _category;
+  int? get responseCode => _responseCode;
 
-  String? get type => _type;
+  String get date => _date;
 
-  String? get difficulty => _difficulty;
-
-  String? get question => _question;
-
-  String? get correctAnswer => _correctAnswer;
-
-  List<String>? get incorrectAnswers => _incorrectAnswers;
+  List<Question>? get results => _results;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['category'] = _category;
-    map['type'] = _type;
-    map['difficulty'] = _difficulty;
-    map['question'] = _question;
-    map['correct_answer'] = _correctAnswer;
-    map['incorrect_answers'] = _incorrectAnswers;
+    map['response_code'] = _responseCode;
+    map['date'] = _date;
+    if (_results != null) {
+      map['results'] = _results?.map((v) => v.toJson()).toList();
+    }
     return map;
   }
 }

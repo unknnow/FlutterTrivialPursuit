@@ -19,7 +19,7 @@ mixin _$GamesState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Results> liste) saved,
+    required TResult Function(List<Question> liste) saved,
     required TResult Function(String message) error,
     required TResult Function(String selectedAnswer, int indexQuestion)
         answerSelected,
@@ -32,7 +32,7 @@ mixin _$GamesState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -44,7 +44,7 @@ mixin _$GamesState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -142,7 +142,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Results> liste) saved,
+    required TResult Function(List<Question> liste) saved,
     required TResult Function(String message) error,
     required TResult Function(String selectedAnswer, int indexQuestion)
         answerSelected,
@@ -158,7 +158,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -173,7 +173,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -240,7 +240,7 @@ abstract class Loading implements GamesState {
 abstract class _$$SavedCopyWith<$Res> {
   factory _$$SavedCopyWith(_$Saved value, $Res Function(_$Saved) then) =
       __$$SavedCopyWithImpl<$Res>;
-  $Res call({List<Results> liste});
+  $Res call({List<Question> liste});
 }
 
 /// @nodoc
@@ -260,7 +260,7 @@ class __$$SavedCopyWithImpl<$Res> extends _$GamesStateCopyWithImpl<$Res>
       liste == freezed
           ? _value._liste
           : liste // ignore: cast_nullable_to_non_nullable
-              as List<Results>,
+              as List<Question>,
     ));
   }
 }
@@ -268,11 +268,11 @@ class __$$SavedCopyWithImpl<$Res> extends _$GamesStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$Saved implements Saved {
-  const _$Saved(final List<Results> liste) : _liste = liste;
+  const _$Saved(final List<Question> liste) : _liste = liste;
 
-  final List<Results> _liste;
+  final List<Question> _liste;
   @override
-  List<Results> get liste {
+  List<Question> get liste {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_liste);
   }
@@ -303,7 +303,7 @@ class _$Saved implements Saved {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Results> liste) saved,
+    required TResult Function(List<Question> liste) saved,
     required TResult Function(String message) error,
     required TResult Function(String selectedAnswer, int indexQuestion)
         answerSelected,
@@ -319,7 +319,7 @@ class _$Saved implements Saved {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -334,7 +334,7 @@ class _$Saved implements Saved {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -394,9 +394,9 @@ class _$Saved implements Saved {
 }
 
 abstract class Saved implements GamesState {
-  const factory Saved(final List<Results> liste) = _$Saved;
+  const factory Saved(final List<Question> liste) = _$Saved;
 
-  List<Results> get liste => throw _privateConstructorUsedError;
+  List<Question> get liste => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$$SavedCopyWith<_$Saved> get copyWith => throw _privateConstructorUsedError;
 }
@@ -464,7 +464,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Results> liste) saved,
+    required TResult Function(List<Question> liste) saved,
     required TResult Function(String message) error,
     required TResult Function(String selectedAnswer, int indexQuestion)
         answerSelected,
@@ -480,7 +480,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -495,7 +495,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -640,7 +640,7 @@ class _$AnswerSelected implements AnswerSelected {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Results> liste) saved,
+    required TResult Function(List<Question> liste) saved,
     required TResult Function(String message) error,
     required TResult Function(String selectedAnswer, int indexQuestion)
         answerSelected,
@@ -656,7 +656,7 @@ class _$AnswerSelected implements AnswerSelected {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -671,7 +671,7 @@ class _$AnswerSelected implements AnswerSelected {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -835,7 +835,7 @@ class _$WrongAnswer implements WrongAnswer {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Results> liste) saved,
+    required TResult Function(List<Question> liste) saved,
     required TResult Function(String message) error,
     required TResult Function(String selectedAnswer, int indexQuestion)
         answerSelected,
@@ -851,7 +851,7 @@ class _$WrongAnswer implements WrongAnswer {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -866,7 +866,7 @@ class _$WrongAnswer implements WrongAnswer {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -1003,7 +1003,7 @@ class _$GameFinish implements GameFinish {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Results> liste) saved,
+    required TResult Function(List<Question> liste) saved,
     required TResult Function(String message) error,
     required TResult Function(String selectedAnswer, int indexQuestion)
         answerSelected,
@@ -1019,7 +1019,7 @@ class _$GameFinish implements GameFinish {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
@@ -1034,7 +1034,7 @@ class _$GameFinish implements GameFinish {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Results> liste)? saved,
+    TResult Function(List<Question> liste)? saved,
     TResult Function(String message)? error,
     TResult Function(String selectedAnswer, int indexQuestion)? answerSelected,
     TResult Function(
