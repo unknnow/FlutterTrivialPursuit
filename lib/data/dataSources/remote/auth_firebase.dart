@@ -30,4 +30,12 @@ class AuthFirebase {
   String? getUser() {
     return (_firebaseAuth.currentUser)?.email;
   }
+
+  String? getUserId() {
+    return (_firebaseAuth.currentUser)?.uid;
+  }
+
+  void signOut() {
+    _firebaseAuth.signOut();
+  }
 }

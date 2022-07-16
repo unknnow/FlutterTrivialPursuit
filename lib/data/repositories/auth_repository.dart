@@ -24,4 +24,16 @@ class AuthRepository {
     UserCredential? userCredential = await _userFirestore.signUp(email: email, password: password);
     return userCredential?.user;
   }
+
+  bool isSignedIn() {
+    return _userFirestore.isSignedIn();
+  }
+
+  String? getUserId() {
+    return _userFirestore.getUserId();
+  }
+
+  void signOut() {
+    _userFirestore.signOut();
+  }
 }

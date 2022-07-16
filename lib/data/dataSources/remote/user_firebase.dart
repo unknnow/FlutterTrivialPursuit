@@ -33,13 +33,23 @@ class UserFirebase {
     await _userRef.doc(id).set(user);
   }
 
-  Future<void> updateUser(TriviaUser user, String id) async {
+  Future<void> updateUser(TriviaUser user, String? id) async {
     _userRef.doc(id).update(user.toJson());
   }
 
   Future<TriviaUser?> getUserById(String id) async {
     var document = await _userRef.doc(id).get();
     return document.data();
+  }
+
+  Future<TriviaUser?> getUserByUid(String uid) async {
+    QuerySnapshot<TriviaUser>? list = await _userRef.where('id', isEqualTo: uid).get();
+    return list.docs.first.data();
+  }
+
+  Future<String> getUserDocIdByUid(String uid) async {
+    QuerySnapshot<TriviaUser>? list = await _userRef.where('id', isEqualTo: uid).get();
+    return list.docs.first.reference.id;
   }
 
   Future<QuerySnapshot<TriviaUser>> getAll() async {

@@ -1,7 +1,14 @@
 import 'dart:io';
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertrivialp/data/entities/User.dart';
+import 'package:fluttertrivialp/ui/pages/profil/bloc/profil_cubit.dart';
+import 'package:fluttertrivialp/ui/pages/profil/bloc/profil_state.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../data/repositories/auth_repository.dart';
+import '../../../data/repositories/user_repository.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({Key? key}) : super(key: key);
@@ -11,32 +18,23 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
+  ProfilCubit? cubit;
+
   bool allowEdit = false;
-  TriviaUser user = TriviaUser.fromJson({
-    'id': 1,
-    'score': 999,
-    'pseudo': 'Corentin',
-    'avatar': 'URL',
-    'games': 1
-  });
+  late TriviaUser user;
 
   TextStyle labelStyle =
-      const TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
   TextStyle textStyle = const TextStyle(
-    fontSize: 17,
+    fontSize: 20,
   );
 
   TextEditingController pseudoController = TextEditingController();
   File _userAvatar = File("");
 
-  _ProfilPageState() {
-    pseudoController.text = user.pseudo.toString();
-  }
-
-  void saveForm() {
-    setState(() {
-      print(pseudoController.text);
-    });
+  void signOut() {
+    cubit?.signOutUser();
+    context.beamToNamed('/');
   }
 
   final ImagePicker _picker = ImagePicker();
@@ -44,80 +42,128 @@ class _ProfilPageState extends State<ProfilPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Profil"),
-        centerTitle: true,
-        backgroundColor: Colors.blue.withOpacity(0.75),
-        actions: [
-          IconButton(
-              onPressed: () {                setState(() {
-                  allowEdit = !allowEdit;
-                });
-              },
-              icon: const Icon(Icons.edit, color: Colors.white))
-        ],
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/backgroundApp.png"),
-            fit: BoxFit.cover,
-          ),
+        appBar: AppBar(
+          title: const Text("Quizz"),
         ),
-        child: Center(
-          child: Form(
-            child: Column(
-              children: [
-                Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: InkWell(
-                        onTap: () async {
-                          XFile? image = await _picker.pickImage(
-                              source: ImageSource.gallery);
-                          setState(() {
-                            if (image != null) {
-                              _userAvatar = File(image.path);
-                            }
-                          });
-                        },
-                        child: _displayAvatar())),
-                Card(
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Text("Score : ${user.score}", style: textStyle),
-                      Text("Games : ${user.games}", style: textStyle),
-                      TextField(
-                        enabled: allowEdit,
-                        controller: pseudoController,
-                        decoration: const InputDecoration(
-                            border: UnderlineInputBorder(), labelText: "Pseudo"),
+        body: MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider<UserRepository>(
+                create: (context) => UserRepository.getInstance()),
+            RepositoryProvider<AuthRepository>(
+                create: (context) => AuthRepository.getInstance()),
+          ],
+          child: BlocProvider(
+            create: (test) {
+              cubit = ProfilCubit(
+                  userRepository: RepositoryProvider.of<UserRepository>(test),
+                  authRepository: RepositoryProvider.of<AuthRepository>(test));
+              return cubit!..loadUser();
+            },
+            child: BlocConsumer<ProfilCubit, ProfilState>(
+              listener: (context, state) {
+                if (state is Error) {
+                  print("ERROR");
+                } else if (state is Loading) {
+                  print("LOADING");
+                } else if (state is Loaded) {
+                  user = state.user;
+                  pseudoController.text = user.pseudo!;
+                }
+              },
+              builder: (context, state) {
+                if (state is Error) {
+                  return Text("");
+                }
+                if (state is Loaded) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/backgroundApp.png"),
+                        fit: BoxFit.cover,
                       ),
-                      Visibility(
-                        visible: allowEdit,
-                        child: TextButton(
-                          onPressed: saveForm,
-                          child: const Text('Sauvegarder'),
+                    ),
+                    child: Center(
+                      child: Form(
+                        child: Column(
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: InkWell(
+                                    onTap: () async {
+                                      XFile? image = await _picker.pickImage(
+                                          source: ImageSource.gallery);
+                                      setState(() {
+                                        if (image != null) {
+                                          _userAvatar = File(image.path);
+                                        }
+                                      });
+                                    },
+                                    child: _displayAvatar())),
+                            Card(
+                              color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Column(
+                                  children: [
+                                    TextField(
+                                      enabled: allowEdit,
+                                      controller: pseudoController,
+                                      decoration: const InputDecoration(
+                                          border: UnderlineInputBorder(), labelText: "Pseudo"),
+                                    ),
+                                    const Divider(
+                                      height: 10,
+                                      color: Colors.transparent,
+                                    ),
+                                    Text("Score : ${user.score}", style: textStyle),
+                                    const Divider(
+                                      height: 10,
+                                      color: Colors.transparent,
+                                    ),
+                                    Text("Games : ${user.games}", style: textStyle),
+                                    Visibility(
+                                      visible: allowEdit,
+                                      child: TextButton(
+                                        onPressed: () => {},
+                                        child: const Text('Sauvegarder'),
+                                      ),
+                                    ),
+                                    const Divider(
+                                      height: 25,
+                                      color: Colors.transparent,
+                                    ),
+                                    ElevatedButton(
+                                        onPressed: signOut,
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Colors.red),
+                                        child: const Text('Déconnexion')),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ],
+                    ),
+                  );
+                } else {
+                  return Text("");
+                }
+              },
             ),
           ),
-        ),
-      ),
+        )
     );
   }
 
   Widget _displayAvatar() => _userAvatar.path == ""
-      ? const SizedBox(width: 150, height: 150, child: CircleAvatar(child: Text("AVATAR"), backgroundColor: Colors.blue))
+      ? const SizedBox(width: 150, height: 150, child: CircleAvatar(backgroundColor: Colors.blue, child: Text("AVATAR")))
       : SizedBox(
-          width: 150,
-          height: 150,
-          child: CircleAvatar(
-            backgroundImage: FileImage(_userAvatar),
-          ),
-        );
+    width: 150,
+    height: 150,
+    child: CircleAvatar(
+      backgroundImage: FileImage(_userAvatar),
+    ),
+  );
 }
+

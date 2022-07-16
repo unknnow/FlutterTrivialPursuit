@@ -1,10 +1,15 @@
+import 'package:fluttertrivialp/data/entities/User.dart';
+import 'package:fluttertrivialp/data/repositories/auth_repository.dart';
 import 'package:fluttertrivialp/data/repositories/question_repository.dart';
+import 'package:fluttertrivialp/data/repositories/user_repository.dart';
 import 'package:fluttertrivialp/ui/pages/game/bloc/game_state.dart';
 import 'package:fluttertrivialp/data/entities/Results.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameCubit extends Cubit<GamesState> {
   final QuestionRepository repository;
+  final UserRepository userRepository;
+  final AuthRepository authRepository;
 
   late Results _lastQuestion;
 
@@ -13,10 +18,9 @@ class GameCubit extends Cubit<GamesState> {
   int score = 0;
   String selectedAnswer = '';
 
-  GameCubit({required this.repository}): super(const Loading());
+  GameCubit({required this.repository, required this.userRepository, required this.authRepository}): super(const Loading());
 
   Future<void> fetchWord() async {
-
     score = 0;
 
     emit(Loading());
@@ -30,7 +34,6 @@ class GameCubit extends Cubit<GamesState> {
   }
 
   Future<void> selectAnswer(String selectedAnswer, int indexQuestion) async {
-
     bool finish = false;
 
     if(selectedAnswer == listResults![indexQuestion].correctAnswer) {
@@ -48,6 +51,22 @@ class GameCubit extends Cubit<GamesState> {
       }
 
       emit(WrongAnswer(true, listResults![indexQuestion].correctAnswer.toString(), score, finish));
+    }
+  }
+
+  Future<void> saveScoreUser(int score) async {
+    try {
+      String? userId = authRepository.getUserId();
+      String userDocId = await userRepository.getUserDocIdByUid(userId!);
+      TriviaUser? user = await userRepository.getUserByUid(userId);
+
+      if (user != null) {
+        user.setScore(user.score + score);
+
+        userRepository.updateUser(user, userDocId);
+      }
+    } on Exception catch(exception) {
+      emit(Error(exception.toString()));
     }
   }
 }

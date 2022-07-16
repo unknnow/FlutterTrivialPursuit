@@ -43,6 +43,10 @@ class TriviaUser {
 
   int? get games => _games;
 
+  void setScore(int score) {
+    _score = score;
+  }
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = _id;

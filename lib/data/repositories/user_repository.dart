@@ -22,6 +22,14 @@ class UserRepository {
     return user;
   }
 
+  Future<TriviaUser?> getUserByUid(String uid) async {
+    return await _userFirestore.getUserByUid(uid);
+  }
+
+  Future<String> getUserDocIdByUid(String uid) async {
+    return _userFirestore.getUserDocIdByUid(uid);
+  }
+
   Future<List<TriviaUser>> getAllUsers() async {
     var usersFirebase = await _userFirestore.getAll();
 
@@ -38,6 +46,10 @@ class UserRepository {
 
   Future<void> createUser(TriviaUser user) async {
     return await _userFirestore.insertUser(user);
+  }
+
+  Future<void> updateUser(TriviaUser user, String? id) async {
+    return await _userFirestore.updateUser(user, id);
   }
 
   Future<void> uploadAvatar(XFile file, String userId) async {

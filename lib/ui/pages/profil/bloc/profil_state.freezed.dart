@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'signin_state.dart';
+part of 'profil_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,25 +15,25 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$SignInState {
+mixin _$ProfilState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() saved,
+    required TResult Function(TriviaUser user) loaded,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? saved,
+    TResult Function(TriviaUser user)? loaded,
     TResult Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? saved,
+    TResult Function(TriviaUser user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -41,21 +41,21 @@ mixin _$SignInState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
-    required TResult Function(Saved value) saved,
+    required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Loading value)? loading,
-    TResult Function(Saved value)? saved,
+    TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
-    TResult Function(Saved value)? saved,
+    TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) =>
@@ -63,19 +63,19 @@ mixin _$SignInState {
 }
 
 /// @nodoc
-abstract class $SignInStateCopyWith<$Res> {
-  factory $SignInStateCopyWith(
-          SignInState value, $Res Function(SignInState) then) =
-      _$SignInStateCopyWithImpl<$Res>;
+abstract class $ProfilStateCopyWith<$Res> {
+  factory $ProfilStateCopyWith(
+          ProfilState value, $Res Function(ProfilState) then) =
+      _$ProfilStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SignInStateCopyWithImpl<$Res> implements $SignInStateCopyWith<$Res> {
-  _$SignInStateCopyWithImpl(this._value, this._then);
+class _$ProfilStateCopyWithImpl<$Res> implements $ProfilStateCopyWith<$Res> {
+  _$ProfilStateCopyWithImpl(this._value, this._then);
 
-  final SignInState _value;
+  final ProfilState _value;
   // ignore: unused_field
-  final $Res Function(SignInState) _then;
+  final $Res Function(ProfilState) _then;
 }
 
 /// @nodoc
@@ -85,7 +85,7 @@ abstract class _$$LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$LoadingCopyWithImpl<$Res> extends _$SignInStateCopyWithImpl<$Res>
+class __$$LoadingCopyWithImpl<$Res> extends _$ProfilStateCopyWithImpl<$Res>
     implements _$$LoadingCopyWith<$Res> {
   __$$LoadingCopyWithImpl(_$Loading _value, $Res Function(_$Loading) _then)
       : super(_value, (v) => _then(v as _$Loading));
@@ -101,7 +101,7 @@ class _$Loading implements Loading {
 
   @override
   String toString() {
-    return 'SignInState.loading()';
+    return 'ProfilState.loading()';
   }
 
   @override
@@ -117,7 +117,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() saved,
+    required TResult Function(TriviaUser user) loaded,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -127,7 +127,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? saved,
+    TResult Function(TriviaUser user)? loaded,
     TResult Function(String message)? error,
   }) {
     return loading?.call();
@@ -137,7 +137,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? saved,
+    TResult Function(TriviaUser user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -151,7 +151,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
-    required TResult Function(Saved value) saved,
+    required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
   }) {
     return loading(this);
@@ -161,7 +161,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Loading value)? loading,
-    TResult Function(Saved value)? saved,
+    TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
   }) {
     return loading?.call(this);
@@ -171,7 +171,7 @@ class _$Loading implements Loading {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
-    TResult Function(Saved value)? saved,
+    TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -182,75 +182,99 @@ class _$Loading implements Loading {
   }
 }
 
-abstract class Loading implements SignInState {
+abstract class Loading implements ProfilState {
   const factory Loading() = _$Loading;
 }
 
 /// @nodoc
-abstract class _$$SavedCopyWith<$Res> {
-  factory _$$SavedCopyWith(_$Saved value, $Res Function(_$Saved) then) =
-      __$$SavedCopyWithImpl<$Res>;
+abstract class _$$LoadedCopyWith<$Res> {
+  factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
+      __$$LoadedCopyWithImpl<$Res>;
+  $Res call({TriviaUser user});
 }
 
 /// @nodoc
-class __$$SavedCopyWithImpl<$Res> extends _$SignInStateCopyWithImpl<$Res>
-    implements _$$SavedCopyWith<$Res> {
-  __$$SavedCopyWithImpl(_$Saved _value, $Res Function(_$Saved) _then)
-      : super(_value, (v) => _then(v as _$Saved));
+class __$$LoadedCopyWithImpl<$Res> extends _$ProfilStateCopyWithImpl<$Res>
+    implements _$$LoadedCopyWith<$Res> {
+  __$$LoadedCopyWithImpl(_$Loaded _value, $Res Function(_$Loaded) _then)
+      : super(_value, (v) => _then(v as _$Loaded));
 
   @override
-  _$Saved get _value => super._value as _$Saved;
+  _$Loaded get _value => super._value as _$Loaded;
+
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_$Loaded(
+      user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as TriviaUser,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$Saved implements Saved {
-  const _$Saved();
+class _$Loaded implements Loaded {
+  const _$Loaded(this.user);
+
+  @override
+  final TriviaUser user;
 
   @override
   String toString() {
-    return 'SignInState.saved()';
+    return 'ProfilState.loaded(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Saved);
+        (other.runtimeType == runtimeType &&
+            other is _$Loaded &&
+            const DeepCollectionEquality().equals(other.user, user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      __$$LoadedCopyWithImpl<_$Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() saved,
+    required TResult Function(TriviaUser user) loaded,
     required TResult Function(String message) error,
   }) {
-    return saved();
+    return loaded(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? saved,
+    TResult Function(TriviaUser user)? loaded,
     TResult Function(String message)? error,
   }) {
-    return saved?.call();
+    return loaded?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? saved,
+    TResult Function(TriviaUser user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
-    if (saved != null) {
-      return saved();
+    if (loaded != null) {
+      return loaded(user);
     }
     return orElse();
   }
@@ -259,39 +283,44 @@ class _$Saved implements Saved {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
-    required TResult Function(Saved value) saved,
+    required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
   }) {
-    return saved(this);
+    return loaded(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Loading value)? loading,
-    TResult Function(Saved value)? saved,
+    TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
   }) {
-    return saved?.call(this);
+    return loaded?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
-    TResult Function(Saved value)? saved,
+    TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
-    if (saved != null) {
-      return saved(this);
+    if (loaded != null) {
+      return loaded(this);
     }
     return orElse();
   }
 }
 
-abstract class Saved implements SignInState {
-  const factory Saved() = _$Saved;
+abstract class Loaded implements ProfilState {
+  const factory Loaded(final TriviaUser user) = _$Loaded;
+
+  TriviaUser get user => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -302,7 +331,7 @@ abstract class _$$ErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$ErrorCopyWithImpl<$Res> extends _$SignInStateCopyWithImpl<$Res>
+class __$$ErrorCopyWithImpl<$Res> extends _$ProfilStateCopyWithImpl<$Res>
     implements _$$ErrorCopyWith<$Res> {
   __$$ErrorCopyWithImpl(_$Error _value, $Res Function(_$Error) _then)
       : super(_value, (v) => _then(v as _$Error));
@@ -333,7 +362,7 @@ class _$Error implements Error {
 
   @override
   String toString() {
-    return 'SignInState.error(message: $message)';
+    return 'ProfilState.error(message: $message)';
   }
 
   @override
@@ -357,7 +386,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() saved,
+    required TResult Function(TriviaUser user) loaded,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -367,7 +396,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? saved,
+    TResult Function(TriviaUser user)? loaded,
     TResult Function(String message)? error,
   }) {
     return error?.call(message);
@@ -377,7 +406,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? saved,
+    TResult Function(TriviaUser user)? loaded,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -391,7 +420,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(Loading value) loading,
-    required TResult Function(Saved value) saved,
+    required TResult Function(Loaded value) loaded,
     required TResult Function(Error value) error,
   }) {
     return error(this);
@@ -401,7 +430,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(Loading value)? loading,
-    TResult Function(Saved value)? saved,
+    TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
   }) {
     return error?.call(this);
@@ -411,7 +440,7 @@ class _$Error implements Error {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(Loading value)? loading,
-    TResult Function(Saved value)? saved,
+    TResult Function(Loaded value)? loaded,
     TResult Function(Error value)? error,
     required TResult orElse(),
   }) {
@@ -422,7 +451,7 @@ class _$Error implements Error {
   }
 }
 
-abstract class Error implements SignInState {
+abstract class Error implements ProfilState {
   const factory Error(final String message) = _$Error;
 
   String get message => throw _privateConstructorUsedError;

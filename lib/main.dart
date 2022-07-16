@@ -1,5 +1,6 @@
 import 'package:beamer/beamer.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertrivialp/firebase_options.dart';
 import 'package:fluttertrivialp/ui/pages/game/game_page.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
   final routerDelegate = BeamerDelegate(
       locationBuilder: RoutesLocationBuilder(routes: {
     '/': (context, state, data) => SignInPage(),
-    '/login': (context, state, data) => SignUpPage(),
+    '/register': (context, state, data) => SignUpPage(),
     '/home': (context, state, data) => MyHomePage(title: ('Welcome'))
     // '/': (context, state, data) => MyHomePage(title: ('Welcome'))
   }));
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      title: 'Flutter trivial pursuit',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         backgroundColor: Colors.white,

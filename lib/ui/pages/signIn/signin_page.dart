@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertrivialp/data/entities/User.dart';
 import 'package:fluttertrivialp/data/repositories/auth_repository.dart';
 import 'package:fluttertrivialp/data/repositories/user_repository.dart';
-import 'package:fluttertrivialp/ui/pages/signIn/signin_cubit.dart';
-import 'package:fluttertrivialp/ui/pages/signIn/signin_state.dart';
+import 'package:fluttertrivialp/ui/pages/signIn/bloc/signin_cubit.dart';
+import 'package:fluttertrivialp/ui/pages/signIn/bloc/signin_state.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -20,16 +20,32 @@ class _SignInState extends State<SignInPage> {
 
   SignInCubit? cubit;
 
-  void saveForm() {
+  void loginUser() {
     cubit?.signInUser(emailController.text, passwordController.text);
+    print(cubit?.checkAlreadyLog());
+    if (cubit?.checkAlreadyLog() == true) {
+      context.beamToNamed('home');
+    }
+  }
+
+  void signOut() {
+    cubit?.signOutUser();
+    context.beamToNamed('');
+  }
+
+  void toHomePage() {
     context.beamToNamed('home');
+  }
+
+  void toRegisterPage() {
+    context.beamToNamed('register');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("SignIn"),
+          title: Text("Connexion"),
         ),
         body: MultiRepositoryProvider(
           providers: [
@@ -39,44 +55,171 @@ class _SignInState extends State<SignInPage> {
                 create: (context) => AuthRepository.getInstance())
           ],
           child: BlocProvider(
-            create: (context) {
+            create: (test) {
               cubit = SignInCubit(
-                  userRepository:
-                      RepositoryProvider.of<UserRepository>(context),
-                  authRepository:
-                      RepositoryProvider.of<AuthRepository>(context));
-              return cubit!;
+                  userRepository: RepositoryProvider.of<UserRepository>(test),
+                  authRepository: RepositoryProvider.of<AuthRepository>(test));
+              return cubit!..checkAlreadyLogEmit();
             },
             child: BlocConsumer<SignInCubit, SignInState>(
               listener: (context, state) {
-                if (state is Error) {
-                } else if (State is Saved) {}
+                /*
+                BUG LE LISTENER NE FONCTIONNE - PROBLEME DE L'APP IMPOSSIBLE A RESOUDRE AVEC UN SIMPLE REBUILD
+                https://github.com/felangel/bloc/issues/2434
+                 */
               },
               builder: (context, state) {
-                if (state is Saved) {
-                  return Text("Connected");
-                } else if (state is Loading) {
-                  return Center(
-                    child: Form(
-                      child: Column(
-                        children: [
-                          TextField(
-                            controller: emailController,
-                            decoration: const InputDecoration(
-                                border: UnderlineInputBorder(),
-                                labelText: "Email"),
+                if (state is Loading) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/backgroundApp.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Center(
+                      child: Card(
+                        child: SizedBox(
+                          width: 350,
+                          height: 260,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Form(
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    "Connexion",
+                                    style: TextStyle(
+                                        fontSize: 35,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blueAccent),
+                                  ),
+                                  TextField(
+                                    controller: emailController,
+                                    decoration: const InputDecoration(
+                                        border: UnderlineInputBorder(),
+                                        labelText: "Email"),
+                                  ),
+                                  TextField(
+                                    controller: passwordController,
+                                    decoration: const InputDecoration(
+                                        border: UnderlineInputBorder(),
+                                        labelText: "Password"),
+                                  ),
+                                  const Divider(
+                                    height: 5,
+                                    color: Colors.transparent,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: loginUser,
+                                    child: const Text('Connexion'),
+                                  ),
+                                  const Divider(
+                                    height: 2,
+                                    color: Colors.transparent,
+                                  ),
+                                  InkWell(
+                                    onTap: toRegisterPage,
+                                    child: const Text(
+                                      "Créer un nouveau compte",
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Colors.blueAccent,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          TextField(
-                            controller: passwordController,
-                            decoration: const InputDecoration(
-                                border: UnderlineInputBorder(),
-                                labelText: "Password"),
+                        ),
+                      ),
+                    ),
+                  );
+                } else if (state is Saved) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/backgroundApp.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Center(
+                      child: Card(
+                        child: SizedBox(
+                          width: 350,
+                          height: 110,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Form(
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    "Connexion réussi !",
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.blueAccent),
+                                  ),
+                                  const Divider(
+                                    height: 10,
+                                    color: Colors.transparent,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: toHomePage,
+                                    child: const Text('Continuer'),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          ElevatedButton(
-                            onPressed: saveForm,
-                            child: const Text('Connexion'),
+                        ),
+                      ),
+                    ),
+                  );
+                } else if (state is AlreadyLog) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/backgroundApp.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Center(
+                      child: Card(
+                        child: SizedBox(
+                          width: 350,
+                          height: 200,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Form(
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    "Vous êtes dejà authentifier sur un compte !",
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.blueAccent),
+                                  ),
+                                  const Divider(
+                                    height: 10,
+                                    color: Colors.transparent,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: toHomePage,
+                                    child: const Text('Continuer'),
+                                  ),
+                                  const Divider(
+                                    height: 2,
+                                    color: Colors.transparent,
+                                  ),
+                                  ElevatedButton(
+                                      onPressed: signOut,
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.red),
+                                      child: const Text('Déconnexion')),
+                                ],
+                              ),
+                            ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   );
